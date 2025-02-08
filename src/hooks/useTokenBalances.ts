@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTokenBalance, getTokenBalances, TokenAmount } from "@lifi/sdk";
+import { getTokenBalances, TokenAmount } from "@lifi/sdk";
 import { useTokens } from "./useTokens";
 import { formatUnits } from "viem";
 import { useChains } from "./useChains";
@@ -19,13 +19,11 @@ export const useTokenBalances = (chainId: number) => {
   const { data: balanceTokens, isLoading: isBalanceLoading } = useQuery({
     queryKey: ["token-balances", accountAddress, chainId, chainTokens?.length],
     queryFn: async () => {
-      const tokenBalance = await getTokenBalance(
-        accountAddress as string,
-        chainTokens![0]
-      );
-      console.log(accountAddress as string);
-      console.log(chainTokens![0]);
-      console.log(tokenBalance);
+      // const tokenBalance = await getTokenBalance(
+      //   accountAddress as string,
+      //   chainTokens![0]
+      // );
+      // console.log(tokenBalance);
       const tokensWithBalance: TokenAmount[] = await getTokenBalances(
         accountAddress as string,
         chainTokens!
