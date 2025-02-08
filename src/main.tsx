@@ -10,6 +10,7 @@ import { EVMBaseProvider } from "./providers/EthereumProvider.tsx";
 import { SVMBaseProvider } from "./providers/SolanaProvider.tsx";
 import { SDKProviders } from "./providers/SDKProviders.tsx";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { UTXOBaseProvider } from "./providers/UTXOProvider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,10 +19,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <EVMBaseProvider>
         <SVMBaseProvider>
-          <SDKProviders />
-          <WalletModalProvider>
-            <App />
-          </WalletModalProvider>
+          <UTXOBaseProvider>
+            <SDKProviders />
+            <WalletModalProvider>
+              <App />
+            </WalletModalProvider>
+          </UTXOBaseProvider>
         </SVMBaseProvider>
       </EVMBaseProvider>
     </QueryClientProvider>
