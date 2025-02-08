@@ -1,4 +1,4 @@
-import { config, getChains } from "@lifi/sdk";
+import { ChainType, config, getChains } from "@lifi/sdk";
 import { useSyncWagmiConfig } from "@lifi/wallet-management";
 import { type FC, type PropsWithChildren } from "react";
 import { createClient, http } from "viem";
@@ -25,13 +25,16 @@ export const EVMBaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data: chains } = useQuery({
     queryKey: ["chainsevm"] as const,
     queryFn: async () => {
-      const chains = await getChains();
+      const chains = await getChains({
+        chainTypes: [ChainType.EVM, ChainType.SVM, ChainType.UTXO],
+      });
       // Update chain configuration for LI.FI SDK
       config.setChains(chains);
       return chains;
     },
   });
 
+  console.log(chains);
   // Synchronize fetched chains with Wagmi config and update connectors
   useSyncWagmiConfig(wagmiConfig, connectors, chains);
 
