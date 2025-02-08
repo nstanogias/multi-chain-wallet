@@ -4,14 +4,14 @@ import { type FC, type PropsWithChildren } from "react";
 import { createClient, http } from "viem";
 import { mainnet } from "viem/chains";
 import type { Config, CreateConnectorFn } from "wagmi";
-import { WagmiProvider, createConfig as createWagmiConfig } from "wagmi";
-import { injected } from "wagmi/connectors";
+import { WagmiProvider, createConfig } from "wagmi";
+import { injected, metaMask } from "wagmi/connectors";
 import { useQuery } from "@tanstack/react-query";
 
-const connectors: CreateConnectorFn[] = [injected()];
+const connectors: CreateConnectorFn[] = [injected(), metaMask()];
 
 // Create Wagmi config with default chain and without connectors
-const wagmiConfig: Config = createWagmiConfig({
+const wagmiConfig: Config = createConfig({
   chains: [mainnet],
   client({ chain }) {
     return createClient({ chain, transport: http() });
