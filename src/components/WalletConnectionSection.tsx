@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, IconButton } from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { formatAddress } from "../utils";
 
 interface WalletConnectionSectionProps {
   isConnected: boolean;
@@ -27,7 +28,7 @@ const WalletConnectionSection: React.FC<WalletConnectionSectionProps> = ({
         <div className="flex gap-x-4 items-center justify-between">
           <p>
             <span className="font-semibold">{connectedText}: </span>
-            {`${address?.slice(0, 6)}...${address?.slice(-4)}`}
+            {formatAddress(address)}
           </p>
           <IconButton color="primary" onClick={onDisconnect} title="Disconnect">
             <PowerSettingsNewIcon />

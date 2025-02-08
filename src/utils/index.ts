@@ -20,3 +20,8 @@ export function formatTokenPrice(
 
   return Number.parseFloat(formattedAmount) * Number.parseFloat(price);
 }
+
+export const formatAddress = (address: string | undefined): string => {
+  if (!address) return "";
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};
