@@ -7,7 +7,7 @@ export const useChains = (type?: ChainType) => {
     queryKey: ["chains"],
     queryFn: async () => {
       const chains = await getChains({
-        chainTypes: [ChainType.EVM, ChainType.SVM],
+        chainTypes: [ChainType.EVM, ChainType.SVM, ChainType.UTXO],
       });
       return chains;
     },
