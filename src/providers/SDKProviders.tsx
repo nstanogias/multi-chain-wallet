@@ -1,17 +1,20 @@
-import { EVM, Solana, config, createConfig } from "@lifi/sdk";
+import { EVM, Solana, UTXO, config, createConfig } from "@lifi/sdk";
 import type { SignerWalletAdapter } from "@solana/wallet-adapter-base";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect } from "react";
 import { getWalletClient, switchChain } from "@wagmi/core";
-import { useConfig } from "wagmi";
+import { useConfig as useWagmiConfig } from "wagmi";
+import { getConnectorClient } from "@bigmi/client";
+import { useConfig as useBigmiConfig } from "@bigmi/react";
 
 createConfig({
   integrator: "Your dApp/company name",
 });
 
 export const SDKProviders = () => {
-  const wagmiConfig = useConfig();
+  const wagmiConfig = useWagmiConfig();
   const { wallet } = useWallet();
+  const bigmiConfig = useBigmiConfig();
 
   useEffect(() => {
     // Configure SDK Providers
@@ -28,8 +31,11 @@ export const SDKProviders = () => {
           return wallet?.adapter as SignerWalletAdapter;
         },
       }),
+      UTXO({
+        getWalletClient: () => getConnectorClient(bigmiConfig),
+      }),
     ]);
-  }, [wagmiConfig, wallet?.adapter]);
+  }, [wagmiConfig, bigmiConfig, wallet?.adapter]);
 
   return null;
 };
