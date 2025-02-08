@@ -5,7 +5,8 @@ import { useMemo } from "react";
 export const useTokens = (chainId: number) => {
   const { data, isLoading } = useQuery({
     queryKey: ["tokens"],
-    queryFn: () => getTokens({ chainTypes: [ChainType.EVM, ChainType.SVM] }),
+    queryFn: () =>
+      getTokens({ chainTypes: [ChainType.EVM, ChainType.SVM, ChainType.UTXO] }),
   });
 
   const filteredData = useMemo(() => {
