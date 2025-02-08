@@ -2,11 +2,11 @@ import { TokenAmount } from "@lifi/sdk";
 import { formatTokenBalance, formatTokenPrice } from "../utils";
 import { Avatar, Skeleton } from "@mui/material";
 
-type TokenRowProps = {
+interface TokenRowProps {
   token: TokenAmount;
   startPosition: number;
   isBalanceLoading: boolean;
-};
+}
 
 const TokenRow = ({
   token,

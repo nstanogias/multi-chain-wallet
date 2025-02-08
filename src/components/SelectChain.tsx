@@ -4,12 +4,12 @@ import Select from "@mui/material/Select";
 import { Avatar, Box } from "@mui/material";
 import { useChains } from "../hooks/useChains";
 
-type Props = {
+interface SelectChainProps {
   selectedChainId?: number;
   onChange: (chainId: number) => void;
-};
+}
 
-const SelectChain = ({ selectedChainId = -1, onChange }: Props) => {
+const SelectChain = ({ selectedChainId = -1, onChange }: SelectChainProps) => {
   const { chains } = useChains();
 
   return (

@@ -1,71 +1,68 @@
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import {
+  useAccount as useWagmiAccount,
+  useConnect,
+  useDisconnect,
+} from "wagmi";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Button, IconButton } from "@mui/material";
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { useConfig as useBigmiConfig } from "@bigmi/react";
+import { disconnect } from "wagmi/actions";
+import WalletConnectionSection from "./WalletConnectionSection";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const WalletConnector = () => {
-  const { connect, connectors } = useConnect();
-  const { isConnected: isEthConnected, address: ethAddress } = useAccount();
-  const { disconnect } = useDisconnect();
+  // EVM
+  const { connect: ethConnect, connectors: ethConnectors } = useConnect();
+  const { isConnected: isEthConnected, address: ethAddress } =
+    useWagmiAccount();
+  const { disconnect: ethDisconnect } = useDisconnect();
 
+  // SVM
   const {
     publicKey,
     connected: isSolConnected,
     disconnect: solDisconnect,
   } = useWallet();
 
+  // UTXO
+  const bigmiConfig = useBigmiConfig();
+  const { isConnected: utxoConnected, address: utxoAddress } = useWagmiAccount({
+    config: bigmiConfig,
+  });
+  const { connect: bigmiConnect, connectors: bigmiConnectors } = useConnect({
+    config: bigmiConfig,
+  });
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center justify-center">
       <h1 className="text-2xl">Multi-Chain Wallet Connector</h1>
 
-      <div className="mt-3">
-        {isEthConnected ? (
-          <div className="flex gap-x-4 items-center justify-between">
-            <p>
-              <span className="font-semibold">EVM Connected: </span>
-              {`${ethAddress?.slice(0, 6)}...${ethAddress?.slice(-4)}`}
-            </p>
-            <IconButton
-              color="primary"
-              onClick={() => disconnect()}
-              title="Disconnect"
-            >
-              <PowerSettingsNewIcon />
-            </IconButton>
-          </div>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => connect({ connector: connectors[0] })}
-          >
-            Connect Ethereum Wallet
-          </Button>
-        )}
-      </div>
+      <WalletConnectionSection
+        isConnected={isEthConnected}
+        address={ethAddress}
+        onConnect={() => ethConnect({ connector: ethConnectors[0] })}
+        onDisconnect={ethDisconnect}
+        connectButtonText="Connect Ethereum Wallet"
+        connectedText="EVM Connected"
+      />
 
-      <div className="mt-2">
-        {isSolConnected ? (
-          <div className="flex gap-x-4 items-center justify-between">
-            <p>
-              <span className="font-semibold">SVM Connected: </span>
-              {`${publicKey?.toString()?.slice(0, 6)}...${publicKey
-                ?.toString()
-                ?.slice(-4)}`}
-            </p>
-            <IconButton
-              color="primary"
-              onClick={() => solDisconnect()}
-              title="Disconnect"
-            >
-              <PowerSettingsNewIcon />
-            </IconButton>
-          </div>
-        ) : (
-          <WalletMultiButton />
-        )}
-      </div>
+      <WalletConnectionSection
+        isConnected={isSolConnected}
+        address={publicKey?.toString()}
+        onConnect={() => {}}
+        onDisconnect={solDisconnect}
+        connectButtonText=""
+        connectedText="SVM Connected"
+        WalletMultiButton={<WalletMultiButton />}
+      />
+
+      <WalletConnectionSection
+        isConnected={utxoConnected}
+        address={utxoAddress}
+        onConnect={() => bigmiConnect({ connector: bigmiConnectors[0] })}
+        onDisconnect={() => disconnect(bigmiConfig)}
+        connectButtonText="Connect BTC Wallet"
+        connectedText="Bigmi Connected"
+      />
     </div>
   );
 };

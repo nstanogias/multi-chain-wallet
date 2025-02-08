@@ -5,11 +5,11 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import TokenRow from "./TokenRow";
 import { Box, Skeleton } from "@mui/material";
 
-type Props = {
+interface TokenListProps {
   chainId: number;
-};
+}
 
-const TokenList = ({ chainId }: Props) => {
+const TokenList = ({ chainId }: TokenListProps) => {
   const { chainTokens, balanceTokens, isBalanceLoading, isLoading } =
     useTokenBalances(chainId);
   const parentRef = useRef<HTMLDivElement>(null);
