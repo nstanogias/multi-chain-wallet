@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SelectChain from "./components/SelectChain.tsx";
-import WalletConnector from "./WalletConnector.tsx";
+import WalletConnector from "./components/WalletConnector.tsx";
 import TokenList from "./components/TokenList.tsx";
 
 function App() {
