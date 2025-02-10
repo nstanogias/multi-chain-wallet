@@ -1,5 +1,5 @@
 import { TokenAmount } from "@lifi/sdk";
-import { formatTokenBalance, formatTokenPrice } from "../utils";
+import { formatNumber, formatTokenBalance, formatTokenPrice } from "../utils";
 import { Avatar, Skeleton } from "@mui/material";
 
 interface TokenRowProps {
@@ -48,11 +48,15 @@ const TokenRow = ({
         ) : (
           <>
             {tokenAmount ? (
-              <span className="text-base font-semibold">{tokenAmount}</span>
+              <span className="text-base font-semibold">
+                {formatNumber(tokenAmount, 4)}
+              </span>
             ) : null}
 
             {tokenPrice ? (
-              <span className="text-sm text-gray-500">${tokenPrice}</span>
+              <span className="text-sm text-gray-500">
+                ${formatNumber(tokenPrice, 2)}
+              </span>
             ) : null}
           </>
         )}
