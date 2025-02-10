@@ -11,3 +11,5 @@ test("returns empty string for undefined address", async () => {
   const formattedAddress = formatAddress(undefined);
   expect(formattedAddress).toBe("");
 });
+
+// TODO: Add more tests

@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# Multi-Chain Wallet Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React-based app** for connecting and managing wallets on **Ethereum**, **Solana** and **Bitcoin** blockchains. This app uses **Wagmi** for Ethereum wallet integration, and **Solana Wallet Adapter** for Solana wallets. Users can connect to Ethereum using Metamask and Solana and Bitcoin using Phantom wallet.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multi-Chain Wallet Connector:**
+  - Connect to Ethereum, Solana and Bitcoin wallets.
+- **Ethereum Wallets:**
+  - Supports MetaMask
+- **Solana Wallets:**
+  - Supports Phantom
+- **Bitcoin Wallets:**
+  - Supports Phantom
+- **Display Token Balance:**
+  - After connecting a wallet, wallet's balances for each token in that ecosystem is displayed.
+- **Dynamic UI Updates:**
+  - UI dynamically updates when wallets are connected or disconnected.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React with Vite**: To build frontend UI.
+- **Solana Wallet Adapter**: For Solana wallet connections.
+- **Wagmi**: For Ethereum and UTXO wallet connections.
+- **LI/FI SDK**: To query a list of all supported tokens and chains.
+- **Material-UI (MUI)**: Used for a clean and responsive UI.
+- **Tailwind CSS**: Used for styling.
+- **TanStack Query**: For data fetching and caching
+- **TanStack Virtual**: For optimized list rendering
+- **Playwright**: For unit and e2e testing
 
-- Configure the top-level `parserOptions` property like this:
+### How to run
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Install deps:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```bash
+    npm install
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+2. Run the project:
+   ```bash
+    npm run dev
+   ```
